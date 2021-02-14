@@ -38,7 +38,7 @@ function play(timeStamp){
   if (gameOver == true){
 
     if (confirm("Game Over. Press OK to Restart.")){
-      window.location = '/';
+      location.reload(true);
     }
     return;
   }
