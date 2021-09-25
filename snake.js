@@ -37,6 +37,7 @@ window.addEventListener("keydown", (input) => {
 })
 
 
+//render
 function play(timeStamp){
   if (gameOver == true){
 
@@ -61,7 +62,11 @@ function play(timeStamp){
 window.requestAnimationFrame(play);
 
 
-//Draw Snake drawSnake(container), and Update Snake newSnake()
+/*
+Draw Snake: drawSnake(container)
+Update Snake: newSnake()
+
+*/
 
 function drawSnake(container){
   snake.forEach((seg) => {
@@ -81,25 +86,28 @@ function drawSnake(container){
 
 
 function newSnake(){
+  //set the snake's last move to new move
   lastMove = newMove;
-  //eat and add a tail
+  
+  //Eating
+  //if eat is true, add one block to tail
   if(eat){
     snake[snake.length] = {...snake[snake.length - 1]};
   }
   eat = false;
 
-  //moving
+  //Moving
+  //the new tail block snake[i] takes the position of the old snake[i-1], and so on...
+  //loop thru the snake body until the snake head, we are gonna give snake head a new position
+  //{...}The spread syntax is used to make shallow copies of JS objects with having the reference issue
   for (let i = snake.length - 1; i > 0; i--){
-    //the new tail block snake[i] takes the position of the old snake[i-1], and so on...
-    //loop thru the snake body until the snake head, we are gonna give snake head a new position
-    //{...}The spread syntax is used to make shallow copies of JS objects with having the reference issue
     snake[i] = {...snake[i-1]};
      
   }
-
   snake[0].x += newMove.x;//up x= x+1 and down x=x-1
   snake[0].y += newMove.y;//left y-1 to right y+1
 }
+
 
 function positionCompare(pos1, pos2){
   //check if they are the same
@@ -164,12 +172,13 @@ function ifGameOver(){
   else gameOver = false;
 }
 
+//get new positon
 function nextStep(){
   newSnake();
   eatApple();
   ifGameOver();
 }
-
+//update the gameboard
 function drawContainer(){
   container.innerHTML = "";
   drawSnake(container);
