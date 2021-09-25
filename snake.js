@@ -1,10 +1,13 @@
 
 //initial position
 const grid = 22;
+//snake body is an array of x and y poistion, initial position set at the middle of the grid
 let snake = [{ x: grid/2, y: grid/2 }];
 let eat = false;
 const snakeMoveSpeed = 5;
 let lastTimeStamp = 0;
+
+//get the gameboard to draw the snake and apple
 const container = document.getElementById("container");
 let gameOver = false;
 let newMove = { x: 0, y: 0 };
@@ -45,7 +48,7 @@ function play(timeStamp){
 
   window.requestAnimationFrame(play);
   const seconds = (timeStamp - lastTimeStamp) / 1000;
-  //time b/w each render, convert milliseconds to seconds
+  //convert milliseconds to seconds set a snake moving speed, so it renders at a speed that I want (1 / snakeMoveSpeed)
   if (seconds < (1 / snakeMoveSpeed)) {return;}
 
   lastTimeStamp = timeStamp;
@@ -54,6 +57,7 @@ function play(timeStamp){
   drawContainer();
 }
 
+//window.requestAnimationFrame(play) play callback function return a time stamp when the function is called.
 window.requestAnimationFrame(play);
 
 
@@ -61,9 +65,12 @@ window.requestAnimationFrame(play);
 
 function drawSnake(container){
   snake.forEach((seg) => {
+    
+   // for each segment{x:position, y:position} of the snake body, create a div and give a class name"snake" to set up backgroud color.
     const snakeDiv = document.createElement("DIV");
     snakeDiv.className = "snake";
-    // x veritical y horizontal
+    
+    // use gridRowStar/end gridColumnStart/End to draw one segment of snake. x:veritical y:horizontal
     snakeDiv.style.gridRowStart = seg.x;
     snakeDiv.style.gridRowEnd = seg.x+1;
     snakeDiv.style.gridColumnStart = seg.y;
