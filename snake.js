@@ -61,7 +61,7 @@ function play(timeStamp){
 window.requestAnimationFrame(play);
 
 
-// Snake
+//Draw Snake drawSnake(container), and Update Snake newSnake()
 
 function drawSnake(container){
   snake.forEach((seg) => {
@@ -90,13 +90,15 @@ function newSnake(){
 
   //moving
   for (let i = snake.length - 1; i > 0; i--){
-    //the second last block will be the new tail block and so on...
+    //the new tail block snake[i] takes the position of the old snake[i-1], and so on...
+    //loop thru the snake body until the snake head, we are gonna give snake head a new position
+    //{...}The spread syntax is used to make shallow copies of JS objects with having the reference issue
     snake[i] = {...snake[i-1]};
      
   }
 
   snake[0].x += newMove.x;//up x= x+1 and down x=x-1
-  snake[0].y += newMove.y;//left to right
+  snake[0].y += newMove.y;//left y-1 to right y+1
 }
 
 function positionCompare(pos1, pos2){
